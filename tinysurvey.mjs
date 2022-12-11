@@ -14,6 +14,7 @@ import {displayresultsmanage} from './routes/displayresultsmanage.mjs';
 import {resetsurvey} from './routes/resetsurvey.mjs';
 import {login} from './routes/login.mjs';
 import {register} from './routes/register.mjs';
+import {updatepassword} from './routes/updatepassword.mjs';
 
 // Create the express application
 const app = express();
@@ -39,6 +40,7 @@ app.use('/displayresultsmanage', displayresultsmanage);
 app.use('/resetsurvey', resetsurvey);
 app.use('/login', login);
 app.use('/register', register);
+app.use('/updatepassword', updatepassword);
 
 // Create a survey manager
 let surveyManager = new SurveyManager();

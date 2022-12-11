@@ -6,8 +6,12 @@ const router = express.Router();
 
 // Home page - just render the index
 router.get('/',  checkSurveys, authenticateToken, (request, response) => {
-
-  response.render('index.ejs', { name: response.user.name});
+  if(response.user.role == "admin"){
+    response.render('adminindex.ejs', { name: response.user.name});
+  }
+  else {
+    response.render('index.ejs', { name: response.user.name});
+  }
 });
 
 

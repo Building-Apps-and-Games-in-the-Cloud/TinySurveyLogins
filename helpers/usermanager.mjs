@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-import { Users } from '../models/user.mjs';
+import { SurveyUsers } from '../models/user.mjs';
 
 import * as dotenv from 'dotenv';
 
@@ -14,12 +14,12 @@ class UserManager{
 
     async init()
     {
-        const adminUser = await Users.findOne({ email: process.env.INITIAL_ADMIN_USERNAME });
+        const adminUser = await SurveyUsers.findOne({ email: process.env.INITIAL_ADMIN_USERNAME });
 
         if (adminUser == null) {
             console.log(`  Admin user not registered`);
             const hashedPassword = await bcrypt.hash(process.env.INITIAL_ADMIN_PASSWORD, 10);
-            const user = new Users(
+            const user = new SurveyUsers(
                 {
                     name: process.env.INITIAL_ADMIN_USERNAME,
                     password: hashedPassword,

@@ -24,7 +24,7 @@ const surveyUserSchema = new mongoose.Schema(
         }
     });
 
-let Users = mongoose.model('surveyusers', surveyUserSchema);
+let SurveyUsers = mongoose.model('surveyusers', surveyUserSchema);
     
-export { Users as Users };
+export { SurveyUsers as SurveyUsers };
     

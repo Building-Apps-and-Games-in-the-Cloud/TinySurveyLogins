@@ -5,7 +5,7 @@ function messageDisplay(heading,message,response){
       menu: [
         {
           description: "Continue",
-          route: "/"
+          route: "/index.html"
         }
       ]
     };

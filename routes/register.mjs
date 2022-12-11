@@ -1,6 +1,6 @@
 
 import express from 'express';
-import {Users}  from '../models/user.mjs';
+import {SurveyUsers}  from '../models/user.mjs';
 import bcrypt from 'bcrypt';
 import { messageDisplay } from '../helpers/messageDisplay.mjs';
 import { checkSurveys } from '../helpers/checkstorage.mjs';
@@ -15,7 +15,7 @@ router.post('/', checkSurveys, async (request, response) => {
     console.log("Doing the register..");
     try {
         // first find the user
-        const existingUser = await Users.findOne({ email: request.body.email });
+        const existingUser = await SurveyUsers.findOne({ email: request.body.email });
 
         if (existingUser) {
             messageDisplay("Register failed", `User ${request.body.email} already exists`, response);
@@ -24,7 +24,7 @@ router.post('/', checkSurveys, async (request, response) => {
         else {
             try {
                 const hashedPassword = await bcrypt.hash(request.body.password, 10);
-                const user = new Users(
+                const user = new SurveyUsers(
                     {
                         name: request.body.name,
                         password: hashedPassword,

@@ -1,6 +1,6 @@
 
 import express from 'express';
-import {Users}  from '../models/user.mjs';
+import {SurveyUsers}  from '../models/user.mjs';
 import bcrypt from 'bcrypt';
 import  jwt from 'jsonwebtoken';
 import { checkSurveys } from '../helpers/checkstorage.mjs';
@@ -17,7 +17,7 @@ router.post('/',  checkSurveys, async (request, response) => {
     console.log("Doing the login..");
     try {
         // first find the user
-        const existingUser = await Users.findOne({ email: request.body.email });
+        const existingUser = await SurveyUsers.findOne({ email: request.body.email });
 
         if (existingUser == null) {
             console.log("Login fail no user registered for:", request.body.email);
@@ -45,7 +45,7 @@ router.post('/',  checkSurveys, async (request, response) => {
                 console.log(`Made a token:${accessToken}`);
                 
                 response.cookie("token", accessToken, { maxAge: jwtExpirySeconds * 1000 });
-                response.render('index.ejs',{ name: existingUser.name});
+                response.redirect('/index.html');
                 console.log("Sucessful login for:", request.body.email);
                 return;
             }

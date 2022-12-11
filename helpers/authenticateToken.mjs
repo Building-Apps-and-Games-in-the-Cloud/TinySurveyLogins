@@ -1,5 +1,5 @@
 import  jwt from 'jsonwebtoken';
-import {Users}  from '../models/user.mjs';
+import {SurveyUsers}  from '../models/user.mjs';
 
 const jwtExpirySeconds = 60;
 const jwtRenewSeconds = 30;
@@ -32,7 +32,7 @@ async function authenticateToken(request, response, next) {
   }
 
   // got the token - use the ID in the token to look up the user
-  const user = await Users.findOne({ _id: payload.id });
+  const user = await SurveyUsers.findOne({ _id: payload.id });
 
   if (user === null) {
     console.log("User not found");
