@@ -14,27 +14,24 @@ router.post('/', checkSurveys, authenticateToken, async (request, response) => {
 
         try {
             // first find the user
-            const existingUser = await SurveyUsers.findOne({ email: request.body.email });
+            const user = await SurveyUsers.findOne({ email: request.body.email });
 
-            if (!existingUser) {
-                messageDisplay("Update failed", `User ${request.body.email} not found`, response);
-                return;
-            }
-            else {
+            if (user) {
                 try {
                     const hashedPassword = await bcrypt.hash(request.body.password, 10);
-                    existingUser.password = hashedPassword;
-                    await existingUser.save();
-                    console.log("User successfully updated:", request.body.email);
+                    user.password = hashedPassword;
+                    await user.save();
                     messageDisplay("Updated OK", `User ${request.body.email} updated`, response);
                 } catch (err) {
                     console.log("err:", err.message);
                     messageDisplay("Update failed", `Please contact support`, response);
                 }
             }
+            else {
+                messageDisplay("Update failed", `User ${request.body.email} not found`, response);
+            }
         }
         catch (err) {
-            console.log(err.message);
             messageDisplay("Update failed", `Please contact support`, response);
             return;
         }
