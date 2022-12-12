@@ -1,4 +1,3 @@
-
 import express from 'express';
 import {SurveyUsers}  from '../models/user.mjs';
 import bcrypt from 'bcrypt';
@@ -12,17 +11,14 @@ router.get('/', (request, res) => {
 });
 
 router.post('/', checkSurveys, async (request, response) => {
-    console.log("Doing the register..");
     try {
-        // first find the user
+        // first try to find the user
         const existingUser = await SurveyUsers.findOne({ email: request.body.email });
 
         if (existingUser) {
             messageDisplay("Register failed", `User ${request.body.email} already exists`, response);
-            return;
         }
         else {
-            try {
                 const hashedPassword = await bcrypt.hash(request.body.password, 10);
                 const user = new SurveyUsers(
                     {
@@ -32,16 +28,10 @@ router.post('/', checkSurveys, async (request, response) => {
                         email: request.body.email
                     });
                 await user.save();
-                console.log("User successfully registered:", request.body.email);
                 messageDisplay("Register OK", `User ${request.body.email} created`,response);
-            } catch (err) {
-                console.log("err:", err.message);
-                messageDisplay("Register failed", `Please contact support`,response);
-            }
         }
     }
     catch (err) {
-        console.log(err.message);
         messageDisplay("Register failed", `Please contact support`,response);
         return;
     }
