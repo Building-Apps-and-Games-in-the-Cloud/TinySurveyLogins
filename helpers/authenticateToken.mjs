@@ -8,7 +8,7 @@ async function authenticateToken(request, response, next) {
 
   const token = request.cookies.token;
 
-  // if the cookie is not set, return an unauthorized error
+  // if the cookie is not set go to the login page
   if (!token) {
     response.redirect('/login');
     return;
